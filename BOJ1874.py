@@ -2,23 +2,20 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
-array = list(int(input()) for _ in range(N))
+array = list(map(int, input().split()))
+array.reverse()
 
-result = []
 stack = []
-now = 1
-flag = True
+result = []
 
-for target in array:
-    while target >= now:
-        stack.append(now)
-        result.append("+")
-        now+=1
-    if stack and stack[-1] == target:
+for num in array:
+    while stack and stack[-1] <= num:
         stack.pop()
-        result.append("-")
+    if stack:
+        result.append(stack[-1])
     else:
-        flag = False
-        break
-print('\n'.join(result) if flag else "NO")
+        result.append(-1)  # 스택이 비면 -1 추가
+    stack.append(num)
 
+result.reverse()
+print(' '.join(map(str, result)))
