@@ -22,5 +22,5 @@ def dfs(x, y, now):
 
 
 dfs(0, 0, 1)
-print(graph)
+
 print(graph[N - 1][M - 1])
