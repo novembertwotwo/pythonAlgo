@@ -1,25 +1,26 @@
 import sys
-input =sys.stdin.readline
+
+input = sys.stdin.readline
 N = int(input())
-array = list(int(input()) for _ in range(N))
-now = 1
-stack = [now]
-result = ["+"]
-flag = True
+array = list(map(int, input().split()))
+array.reverse()
+
+stack = []
+result = []
 
 for i in array:
-    while i > now:
-        now +=1
-        stack.append(now)
-        result.append("+")
-    if stack and i == stack[-1]:
-        stack.pop()
-        result.append("-")
-    elif stack and i<stack[-1]:
-        flag = False
-        break
-
-if flag:
-    print('\n'.join(result))
-else:
-    print("NO")
+    if stack:
+        if stack[-1] > i:
+            result.append(stack[-1])
+            stack.append(i)
+        else:
+            while stack and stack[-1] <= i:
+                stack.pop()
+            if stack:
+                result.append(stack[-1])
+                stack.append(i)
+    if not stack:
+        stack.append(i)
+        result.append(-1)
+result.reverse()
+print(' '.join(map(str,result)))
