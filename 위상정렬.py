@@ -18,7 +18,6 @@ for i in range(1, N + 1):
 result = []
 
 while q:
-    print(q)
     now = q.popleft()
     result.append(now)
     for i in array[now]:
