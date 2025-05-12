@@ -37,7 +37,7 @@ while q:
         union_parent(parent,a, b)
         result += distance
         count +=1
-    if count == N-2:
-        break
+        if count == N-2:
+            break
 
 print(result)
