@@ -30,14 +30,12 @@ for _ in range(M):
     heapq.heappush(q, (distance, a, b))
 
 result = 0
-count = 0
+last = 0
 while q:
     distance, a, b = heapq.heappop(q)
     if find_parent(parent,a) != find_parent(parent,b):
         union_parent(parent,a, b)
         result += distance
-        count +=1
-        if count == N-2:
-            break
+        last = distance
 
-print(result)
+print(result-last)
