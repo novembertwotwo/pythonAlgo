@@ -1,39 +1,26 @@
-def gold_func(n, m, data):
-    d = [[0] * m for _ in range(n)]
-
+def gold(n,m,array):
+    maxVal = 0
+    dp = [[0]* m for _ in range(n)]
     for i in range(n):
-        d[i][0] = data[i][0]
-
-    for j in range(1, m):
-        for i in range(n):
-            # 왼쪽 아래가 금광 범위를 넘지 않는다면
-            if i + 1 < n:
-                temp = data[i][j] + d[i + 1][j - 1]
-                d[i][j] = max(d[i][j], temp)
-            # 왼쪽 위가 금광 범위를 넘지 않는다면
-            elif i - 1 >= 0:
-                temp = data[i][j] + d[i - 1][j - 1]
-                d[i][j] = max(d[i][j], temp)
-            # 왼쪽
-            temp = data[i][j] + d[i][j - 1]
-            d[i][j] = max(d[i][j], temp)
-    max_list = []
-
+        dp[i][0] = array[i][0]
+    for y in range(m-1):
+        for x in range(n):
+            if 0<x<n-1:
+                dp[x][y+1] = max(dp[x-1][y],dp[x][y],dp[x+1][y])+array[x][y+1]
+            elif x==0:
+                dp[x][y + 1] = max( dp[x][y], dp[x + 1][y]) + array[x][y + 1]
+            elif x==n-1:
+                dp[x][y + 1] = max(dp[x - 1][y], dp[x][y]) + array[x][y + 1]
     for i in range(n):
-        max_list.append(max(d[i]))
-
-    print(max(max_list))
-
+        maxVal = max(maxVal,dp[i][m-1])
+    return maxVal
 
 T = int(input())
 
-for i in range(T):
-    n, m = map(int, input().split())
-    input_data = list(map(int, input().split()))
-
+for _ in range(T):
+    n,m = map(int,input().split())
+    array = list(map(int,input().split()))
     data = []
-
-    for i in range(0, len(input_data), 4):
-        data.append(input_data[i:i + 4])
-
-    gold_func(n, m, data)
+    for i in range(0,len(array),m):
+        data.append(array[i:i+m])
+    print(gold(n,m,data))
